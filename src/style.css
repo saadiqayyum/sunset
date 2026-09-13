@@ -1,0 +1,221 @@
+/* Dusk over East Java: blush land, periwinkle sea, plum hills, a mango sun.
+   main.js reads these too, for the map tint and the sun markers. */
+:root {
+  --land:  #FBEDEB;
+  --land-2:#F4DEDC;
+  --sea:   #B9C2F2;
+  --plum:  #3A2A5C;
+  --mist:  #75689A;
+  --sun:   #FFB02E;
+  --paper: #FFFBFA;
+
+  --gap: 16px;
+  font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  color: var(--plum);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--land);
+  overscroll-behavior: none;
+}
+
+#map { position: fixed; inset: 0; }
+
+h1, h2 {
+  font-family: 'Sniglet', 'Atkinson Hyperlegible', system-ui, sans-serif;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+}
+
+/* ------------------------------------------------------------------ card */
+
+#card {
+  position: fixed;
+  z-index: 2;
+  top: var(--gap);
+  left: var(--gap);
+  width: 360px;
+  max-height: calc(100dvh - 2 * var(--gap));
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 2px solid var(--plum);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+#browse, #detail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 20px 20px 16px;
+}
+#detail { overflow-y: auto; }
+#browse[hidden], #detail[hidden] { display: none; }
+#browse > :not(#list), #detail > * { flex: none; } /* only the list and detail scroll */
+
+h1 { font-size: 34px; letter-spacing: -0.01em; }
+
+#status {
+  margin: 6px 0 16px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--mist);
+}
+
+.when {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+}
+
+#date {
+  font: inherit;
+  color: var(--plum);
+  background: var(--land);
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+
+#kinds {
+  display: flex;
+  gap: 6px;
+  margin: 14px -20px 4px;
+  padding: 0 20px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+#kinds button {
+  flex: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--plum);
+  background: none;
+  border: 1.5px solid var(--land-2);
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+#kinds button[aria-pressed='true'] {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: var(--paper);
+}
+
+/* ------------------------------------------------------------------ list */
+
+#list {
+  list-style: none;
+  margin: 8px -20px 0;
+  padding: 0;
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1;
+}
+
+#list li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 9px 20px;
+  cursor: pointer;
+}
+#list li:hover { background: var(--land); }
+#list li.empty { display: block; cursor: default; color: var(--mist); line-height: 1.45; }
+#list li.empty:hover { background: none; }
+
+#list img { display: block; }
+.name  { display: block; font-size: 16px; font-weight: 700; line-height: 1.25; }
+.when-hidden { display: block; font-size: 14px; color: var(--mist); margin-top: 1px; }
+
+.hint {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--mist);
+}
+
+/* ------------------------------------------------------------------ detail */
+
+#back {
+  align-self: flex-start;
+  font: inherit;
+  font-size: 14px;
+  color: var(--mist);
+  background: none;
+  border: 0;
+  padding: 0;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+#back::before { content: '‹ '; }
+#back:hover { color: var(--plum); }
+
+h2 { font-size: 26px; }
+
+#d-meta { margin: 4px 0 14px; font-size: 15px; color: var(--mist); }
+
+#d-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+#d-verdict { margin: 14px 0 0; font-size: 17px; line-height: 1.45; }
+#d-nearby, #d-weather { margin: 6px 0 0; font-size: 15px; line-height: 1.45; color: var(--mist); }
+#d-nearby:empty, #d-weather:empty { display: none; }
+
+#d-nav {
+  align-self: flex-start;
+  margin-top: 16px;
+  padding: 9px 16px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--plum);
+  background: var(--sun);
+  border-radius: 999px;
+  text-decoration: none;
+}
+#d-nav:hover { background: #FFC15C; }
+
+/* ------------------------------------------------------------------ map chrome */
+
+.maplibregl-ctrl-group {
+  border: 2px solid var(--plum) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+.maplibregl-ctrl-attrib { font-size: 11px; }
+
+:focus-visible { outline: 3px solid var(--plum); outline-offset: 2px; }
+
+/* ------------------------------------------------------------------ phones */
+
+@media (max-width: 640px) {
+  #card {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 58dvh;
+    border-width: 2px 0 0;
+    border-radius: 24px 24px 0 0;
+  }
+  h1 { font-size: 28px; }
+  #status { margin-bottom: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

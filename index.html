@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>senja: sunset spots in East Java</title>
+<meta name="description" content="Find cafés, beaches and hills in East Java where you can watch the sun go all the way down." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Sniglet:wght@800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="map"></div>
+
+  <main id="card">
+    <section id="browse" aria-label="Sunset spots on the map">
+      <header>
+        <h1>senja</h1>
+        <p id="status">Loading spots…</p>
+      </header>
+
+      <label class="when">Sunset on <input type="date" id="date" /></label>
+      <div id="kinds" role="group" aria-label="Kind of place"></div>
+
+      <ol id="list"></ol>
+      <p class="hint">Place not listed? Tap it on the map.</p>
+    </section>
+
+    <section id="detail" hidden aria-live="polite">
+      <button id="back" type="button">Back to list</button>
+      <h2 id="d-name"></h2>
+      <p id="d-meta"></p>
+      <svg id="d-scene" viewBox="0 0 320 150" role="img" aria-label="The hills to the west, and where the sun goes down"></svg>
+      <p id="d-verdict"></p>
+      <p id="d-nearby"></p>
+      <p id="d-weather"></p>
+      <a id="d-nav" target="_blank" rel="noopener">Open in Google Maps</a>
+    </section>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
